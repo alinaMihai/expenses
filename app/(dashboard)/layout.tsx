@@ -1,9 +1,11 @@
+import { ClerkProvider } from '@clerk/nextjs';
 import '@/styles/global.css'
 import GlassPane from "@/components/GlassPane";
 import Sidebar from '@/components/Sidebar';
 
 export default function DashboardRootLayout({children}) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <head />
       <body className="h-screen w-screen candy-mesh p-6">
@@ -15,5 +17,6 @@ export default function DashboardRootLayout({children}) {
         <div id="modal"></div>
       </body>
     </html>
+    </ClerkProvider>
   )
 }
