@@ -27,7 +27,6 @@ model Budget {
   updatedAt DateTime @updatedAt
 
   ownerId String
-  // owner   User   @relation(fields: [ownerId], references: [id])
 
   name        String
   description String?

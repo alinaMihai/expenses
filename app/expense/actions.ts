@@ -12,16 +12,6 @@ export const createExpense = async (params: Expense, userId: string) => {
     const { categoryId, name, notes, value, isRecurring, recurrenceInterval } =
       params;
 
-    // TODO create category in separate function
-    // const category = await db.category.create({
-    //   data: {
-    //     name: "groceries",
-    //     ownerId: userId,
-    //   },
-    // });
-
-    // console.log({ category });
-
     await db.expense.create({
       data: {
         categoryId,
