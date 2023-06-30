@@ -10,59 +10,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  email     String @unique
-  firstName String
-  lastName  String
-  password  String
-  projects  Project[]
-  tasks      Task[]
+enum CURRENCY {
+  RON
+  EURO
+  DOLLAR
 }
 
-model Project {
+enum INTERVAL {
+  MONTHLY
+  YEARLY
+}
+
+model Budget {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name    String
   ownerId String
-  owner   User   @relation(fields: [ownerId], references: [id])
+  // owner   User   @relation(fields: [ownerId], references: [id])
 
+  name        String
   description String?
-  due         DateTime?
+  value   Int
+  currency CURRENCY? @default(RON)
   deleted     Boolean   @default(false)
-  tasks       Task[]
 
   @@unique([ownerId, name])
   @@index([ownerId, id])
 }
 
-enum TASK_STATUS {
-  NOT_STARTED
-  STARTED
-  COMPLETED
-}
-
-model Task {
+model Expense {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  status TASK_STATUS @default(NOT_STARTED)
-  name   String
-
   ownerId   String
-  owner     User    @relation(fields: [ownerId], references: [id])
-  projectId String
-  project   Project @relation(fields: [projectId], references: [id])
-
-  description String?
-  due     DateTime?
+  categoryId String
+  category Category @relation(fields: [categoryId], references: [id])
+  
+  name   String
+  notes String?
+  value   Int
+  isRecurring  Boolean?   @default(false)
+  recurrenceInterval INTERVAL? @default(MONTHLY)
   deleted Boolean   @default(false)
-
   @@index([ownerId])
+}
+
+model Category {
+  id String @id @default(uuid())
+  name String
+  expenses Expense[]
+  ownerId String
 }
