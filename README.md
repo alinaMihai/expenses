@@ -6,6 +6,12 @@ This project and [companion website](https://fullstack-v2-instructions.vercel.ap
 
 ## Getting Started
 
+To make the database work run the following command:
+```bash
+npx prisma migrate dev
+```
+
+
 First, run the development server:
 
 ```bash
