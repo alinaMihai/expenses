@@ -8,6 +8,11 @@ export default async function ExpensesPage({ }) {
   const { userId } = useAuth();
   const [expenses, setExpenses] = useState([] as Array<Expense>);
 
+  useEffect(() => {
+    fetchAllExpenses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (!userId) return null;
 
   async function fetchAllExpenses() {
@@ -15,11 +20,6 @@ export default async function ExpensesPage({ }) {
     if (!userId) return;
     setExpenses(await getExpenses(userId));
   }
-
-  useEffect(() => {
-    fetchAllExpenses();
-  }, [])
-
 
   return (
     <div className="h-full overflow-y-auto pr-6 w-1/1">
